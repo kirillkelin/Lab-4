@@ -1,0 +1,108 @@
+#include <iostream>
+#include <ctime>
+#define N 6
+using namespace std;
+
+void Func_1(int array[N][N], int *plus,int *minus)
+{
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			if (i + j > N - 1)
+			{
+				if (array[i][j] > 0 && array[i][j] % 2 == 0)
+				{
+					*plus += 1;
+				}
+				if (array[i][j] < 0 && array[i][j] % 2 == 0)
+				{
+					*minus +=1;
+				}
+			}
+		}
+	}
+}
+
+void Func(int array[N][N], int *B)
+{
+	for (int i = 0; i < N; i+=2)
+	{
+		int max = array[i][0];
+		for (int j = 0; j < N; j++)
+		{
+			if (array[i][j + 1] > max )
+			{
+				max = array[i][j +1];
+			}
+		}
+		*B = max;
+		B++;
+	}
+}
+
+ void GiveValue(int *array)
+{
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			*array = rand() % 100 - 50;
+			array++;
+		}
+	}
+}
+
+ void ShowArray_1(int *array) 
+ {
+	 for (int i = 0; i < N; i++)
+	 {
+		 for (int i = 0; i < N; i++)
+		 {
+			 cout << *array << "\t";
+			 array++;
+		 }
+		 cout << endl;
+	 }
+ }
+
+ void ShowArray_2(int *array)
+ {
+	 for (int i = 0; i < N/2; i++)
+	 {
+		 cout << *array << "\t";
+		 array++;
+	 }
+ }
+
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	srand(time(NULL));
+	int A[N][N];
+	
+	GiveValue(&A[0][0]);
+	ShowArray_1(&A[0][0]);
+	
+	int B[N / 2];
+	cout << endl;
+
+	Func(A,&B[0]);
+
+	ShowArray_2(&B[0]);
+
+	int plus = 0;
+	int minus = 0;
+	int *p;
+	int *m;
+	p = &plus;
+	m = &minus;
+	Func_1(A, p, m);
+	cout << endl;
+	cout << endl;
+	cout << "Количество положительных четных - " << plus;
+	cout << endl << "Количество отрицательных четных - " << minus;
+
+
+}
